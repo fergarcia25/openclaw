@@ -4,6 +4,10 @@ set -e
 CONFIG_DIR="/home/node/.openclaw"
 CONFIG_FILE="$CONFIG_DIR/openclaw.json"
 
+# Crear directorios necesarios para Nginx en /tmp
+mkdir -p /tmp/nginx_client_body /tmp/nginx_proxy /tmp/nginx_fastcgi \
+         /tmp/nginx_uwsgi /tmp/nginx_scgi
+
 mkdir -p "$CONFIG_DIR"
 
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -42,7 +46,7 @@ EOF
 fi
 
 echo "[entrypoint] Iniciando Nginx en puerto 7860..."
-nginx
+nginx -c /etc/nginx/nginx.conf
 
 echo "[entrypoint] Iniciando OpenClaw Gateway en puerto 18789 (loopback)..."
 exec openclaw gateway --port 18789 --bind loopback
