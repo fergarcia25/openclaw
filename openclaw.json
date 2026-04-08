@@ -4,7 +4,8 @@
     "auth": {
       "token": "${OPENCLAW_GATEWAY_TOKEN}"
     },
-    "bind": "loopback"
+    "mode": "remote",
+    "bind": "lan"
   },
   "models": {
     "default": "claude-sonnet-4-20250514",
