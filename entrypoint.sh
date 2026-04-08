@@ -8,7 +8,8 @@ mkdir -p "$CONFIG_DIR"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "[entrypoint] Generando openclaw.json..."
-  cat > "$CONFIG_FILE" << JSONEOF
+
+  cat > "$CONFIG_FILE" << EOF
 {
   "gateway": {
     "mode": "local",
@@ -19,23 +20,19 @@ if [ ! -f "$CONFIG_FILE" ]; then
       "token": "${OPENCLAW_GATEWAY_TOKEN}"
     }
   },
-  "models": {
-    "providers": [
-      {
-        "type": "anthropic",
-        "label": "anthropic",
-        "apiKey": "${ANTHROPIC_API_KEY}"
-      }
-    ],
-    "default": "claude-sonnet-4-20250514"
+  "env": {
+    "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
   },
   "agents": {
     "defaults": {
-      "model": "claude-sonnet-4-20250514"
+      "model": {
+        "primary": "anthropic/claude-sonnet-4-6"
+      }
     }
   }
 }
-JSONEOF
+EOF
+
   echo "[entrypoint] openclaw.json generado."
 else
   echo "[entrypoint] openclaw.json ya existe, omitiendo."
