@@ -8,17 +8,23 @@ mkdir -p "$CONFIG_DIR"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "[entrypoint] Generando openclaw.json..."
-
   cat > "$CONFIG_FILE" << EOF
 {
   "gateway": {
     "mode": "local",
-    "port": 7860,
-    "bind": "lan",
+    "port": 18789,
+    "bind": "loopback",
     "auth": {
       "mode": "token",
       "token": "${OPENCLAW_GATEWAY_TOKEN}"
-    }
+    },
+    "controlUi": {
+      "allowedOrigins": [
+        "https://fergarcia25-openclaw.hf.space"
+      ],
+      "dangerouslyAllowHostHeaderOriginFallback": true
+    },
+    "trustedProxies": ["127.0.0.1"]
   },
   "env": {
     "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
@@ -32,11 +38,11 @@ if [ ! -f "$CONFIG_FILE" ]; then
   }
 }
 EOF
-
   echo "[entrypoint] openclaw.json generado."
-else
-  echo "[entrypoint] openclaw.json ya existe, omitiendo."
 fi
 
-echo "[entrypoint] Iniciando gateway en puerto 7860..."
-exec openclaw gateway --port 7860 --bind lan --allow-unconfigured
+echo "[entrypoint] Iniciando Nginx en puerto 7860..."
+nginx
+
+echo "[entrypoint] Iniciando OpenClaw Gateway en puerto 18789 (loopback)..."
+exec openclaw gateway --port 18789 --bind loopback
