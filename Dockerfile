@@ -1,4 +1,4 @@
-FROM ghcr.io/openclaw-ai/openclaw:latest
+FROM alpine/openclaw:latest
 
 # Hugging Face Spaces expone el puerto 7860
 ENV PORT=7860
