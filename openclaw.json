@@ -2,10 +2,12 @@
   "gateway": {
     "port": 7860,
     "auth": {
+      "mode": "token",
       "token": "${OPENCLAW_GATEWAY_TOKEN}"
     },
-    "mode": "remote",
-    "bind": "lan"
+    "mode": "lan",
+    "bind": "127.0.0.1",
+    "trustedProxies": "127.0.0.1"
   },
   "models": {
     "default": "claude-sonnet-4-20250514",
