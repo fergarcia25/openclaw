@@ -1,0 +1,24 @@
+name: Sync to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - main        # Se activa en cada push a main
+  workflow_dispatch: # También permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  sync-to-huggingface:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # Necesario para traer todo el historial de git
+          lfs: true
+
+      - name: Push al Space de Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git push -f https://fergarcia25:$HF_TOKEN@huggingface.co/spaces/fergarcia25/openclaw main
