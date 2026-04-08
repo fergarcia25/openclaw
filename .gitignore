@@ -1,0 +1,13 @@
+# Secretos - NUNCA subir al repo
+.env
+.env.local
+*.secret
+
+# OpenClaw datos locales
+.openclaw/
+data/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

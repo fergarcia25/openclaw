@@ -1,0 +1,27 @@
+{
+  "gateway": {
+    "port": 7860,
+    "auth": {
+      "token": "${OPENCLAW_GATEWAY_TOKEN}"
+    },
+    "bind": "0.0.0.0"
+  },
+  "models": {
+    "default": "claude-sonnet-4-20250514",
+    "providers": [
+      {
+        "name": "anthropic",
+        "type": "anthropic",
+        "apiKey": "${ANTHROPIC_API_KEY}"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "id": "default",
+      "name": "Agente Principal",
+      "model": "claude-sonnet-4-20250514",
+      "provider": "anthropic"
+    }
+  ]
+}
