@@ -1,14 +1,15 @@
 FROM alpine/openclaw:latest
 
-# Hugging Face Spaces requiere el puerto 7860
+# Hugging Face Spaces requiere puerto 7860
 EXPOSE 7860
 
-# Variables de entorno (se inyectan desde HF Secrets)
+# Variables de entorno inyectadas desde HF Secrets
 ENV ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
 ENV OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
 
-# Directorio de datos persistentes
-WORKDIR /data
+# Copiar el script de arranque
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Comando correcto: "openclaw gateway" con --port y --bind lan (para aceptar tráfico externo)
-CMD ["openclaw", "gateway", "--port", "7860", "--bind", "lan"]
+# Usar el entrypoint que preconfigurar openclaw.json antes de arrancar
+ENTRYPOINT ["/entrypoint.sh"]
