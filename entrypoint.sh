@@ -6,9 +6,8 @@ CONFIG_FILE="$CONFIG_DIR/openclaw.json"
 
 mkdir -p "$CONFIG_DIR"
 
-# Solo escribir config si no existe ya
 if [ ! -f "$CONFIG_FILE" ]; then
-  echo "[entrypoint] Generando openclaw.json desde variables de entorno..."
+  echo "[entrypoint] Generando openclaw.json..."
   cat > "$CONFIG_FILE" << JSONEOF
 {
   "gateway": {
@@ -37,10 +36,10 @@ if [ ! -f "$CONFIG_FILE" ]; then
   }
 }
 JSONEOF
-  echo "[entrypoint] Configuración generada correctamente."
+  echo "[entrypoint] openclaw.json generado."
 else
-  echo "[entrypoint] openclaw.json ya existe, omitiendo generación."
+  echo "[entrypoint] openclaw.json ya existe, omitiendo."
 fi
 
-echo "[entrypoint] Iniciando OpenClaw Gateway en puerto 7860..."
+echo "[entrypoint] Iniciando gateway en puerto 7860..."
 exec openclaw gateway --port 7860 --bind lan --allow-unconfigured

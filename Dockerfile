@@ -7,9 +7,7 @@ EXPOSE 7860
 ENV ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
 ENV OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
 
-# Copiar el script de arranque
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Copiar entrypoint con permisos de ejecución directamente (sin necesitar chmod)
+COPY --chmod=755 entrypoint.sh /home/node/entrypoint.sh
 
-# Usar el entrypoint que preconfigurar openclaw.json antes de arrancar
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/home/node/entrypoint.sh"]
